@@ -20,7 +20,13 @@ impl List {
         // `Cons` also has type List
         Cons(elem, Box::new(self))
     }
-
+    
+    fn append(self, elem: u32) -> List {
+	match self{
+	    Cons(head, tail) => Cons(head, Box::new(tail.append(elem))),
+	    Nil => Cons(elem, Box::new(Nil)),
+	}	
+    }
     // Return the length of the list
     fn len(&self) -> u32 {
         // `self` has to be matched, because the behavior of this method
@@ -59,8 +65,16 @@ fn main() {
     list = list.prepend(1);
     list = list.prepend(2);
     list = list.prepend(3);
-
-    // Show the final state of the list
+    list = list.append(7);
+    list = list.append(56);
+    list = list.prepend(3);
+    list = list.prepend(1);
+    list = list.prepend(2);
+    list = list.prepend(3);
+    list = list.append(7);
+    list = list.append(56);
+    list = list.prepend(3);    
+// Show the final state of the list
     println!("linked list has length: {}", list.len());
     println!("{}", list.stringify());
 }
